@@ -135,6 +135,9 @@ while game_status:
         game_status = False
     elif (snake.x + snake.VELOCITY) + snake.SNAKE_WIDTH // 2 > WIDTH:
         game_status = False
+    for num in range(1, len(snake.snake_body)):
+        if snake.x == snake.snake_body[num]["x"] and snake.y == snake.snake_body[num]["y"]:
+            game_status = False
     screen.fill((0, 0, 0))
     game.draw_grid(screen)
     fruit.draw_fruit(screen)
