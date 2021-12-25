@@ -6,7 +6,6 @@ import time
 pygame.init()
 pygame.font.init()
 SIZE = WIDTH, HEIGHT = 1000, 1000
-game_status = True
 screen = pygame.display.set_mode(SIZE)
 clock = pygame.time.Clock()
 pygame.display.set_caption("Snake")
@@ -14,7 +13,7 @@ pygame.display.set_caption("Snake")
 
 class Game:
     score = 0
-
+    game_status = True
     def score_point(self):
         self.score += 1
 
@@ -34,6 +33,15 @@ class Game:
             y += grid_width
             pygame.draw.line(window, (255, 255, 255), (x, 0), (x, WIDTH))
             pygame.draw.line(window, (255, 255, 255), (0, y), (HEIGHT, y))
+    def game_over(self, snake):
+        if snake.y < 0:
+            self.game_status = False
+        elif snake.x < 0:
+            self.game_status = False
+        elif (snake.y + snake.VELOCITY) + snake.SNAKE_HEIGHT // 2 > HEIGHT:
+            self.game_status = False
+        elif (snake.x + snake.VELOCITY) + snake.SNAKE_WIDTH // 2 > WIDTH:
+            self.game_status = False
 
 
 class Snake:
@@ -62,6 +70,16 @@ class Snake:
                 snake.direction = "left"
             if ev.key == pygame.K_d and self.direction != "left":
                 snake.direction = "right"
+
+    def move_snake(self):
+        if self.direction == "up":
+            self.y -= self.VELOCITY
+        elif self.direction == "down":
+            self.y += self.VELOCITY
+        elif self.direction == "left":
+            self.x -= self.VELOCITY
+        elif self.direction == "right":
+            self.x += self.VELOCITY
 
     def snake_grow(self):
         self.snake_body.append({
@@ -109,32 +127,16 @@ class Fruit:
 game = Game()
 snake = Snake()
 fruit = Fruit()
-while game_status:
+while game.game_status:
     time.sleep(0.1)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         snake.set_direction(event)
-
     for node in snake.snake_body:
         node["pos"] = (node["x"], node["y"])
-
-    if snake.direction == "up":
-        snake.y -= snake.VELOCITY
-    elif snake.direction == "down":
-        snake.y += snake.VELOCITY
-    elif snake.direction == "left":
-        snake.x -= snake.VELOCITY
-    elif snake.direction == "right":
-        snake.x += snake.VELOCITY
-    if snake.y < 0:
-        game_status = False
-    elif snake.x < 0:
-        game_status = False
-    elif (snake.y + snake.VELOCITY) + snake.SNAKE_HEIGHT // 2 > HEIGHT:
-        game_status = False
-    elif (snake.x + snake.VELOCITY) + snake.SNAKE_WIDTH // 2 > WIDTH:
-        game_status = False
+    snake.move_snake()
+    game.game_over(snake)
     for num in range(1, len(snake.snake_body)):
         if snake.x == snake.snake_body[num]["x"] and snake.y == snake.snake_body[num]["y"]:
             game_status = False
