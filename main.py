@@ -48,9 +48,9 @@ class Game:
             self.game_status = False
         elif snake.x < 0:
             self.game_status = False
-        elif (snake.y + snake.VELOCITY) + snake.SNAKE_HEIGHT // 2 > HEIGHT:
+        elif snake.y == HEIGHT:
             self.game_status = False
-        elif (snake.x + snake.VELOCITY) + snake.SNAKE_WIDTH // 2 > WIDTH:
+        elif snake.x == WIDTH:
             self.game_status = False
 
 
@@ -84,7 +84,7 @@ def start_game():
             game.score_point()
             snake.snake_grow()
         pygame.display.update()
-        clock.tick(30)
+        clock.tick(10)
 
 
 def game_over_menu():
