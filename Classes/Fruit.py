@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 
 
 class Fruit:
@@ -8,8 +9,11 @@ class Fruit:
     FRUIT_WIDTH = 50
     FRUIT_HEIGHT = 50
     FRUIT_COLOR = (255, 255, 255)
-    x = random.randrange(0, WIDTH - FRUIT_WIDTH, 50)
-    y = random.randrange(0, HEIGHT - FRUIT_HEIGHT, 50)
+
+    def __init__(self):
+        random.seed(time.perf_counter_ns())
+        self.x = random.randrange(0, self.WIDTH - self.FRUIT_WIDTH, 50)
+        self.y = random.randrange(0, self.HEIGHT - self.FRUIT_HEIGHT, 50)
 
     def refresh_fruit(self):
         self.x = random.randrange(0, self.WIDTH - self.FRUIT_WIDTH, 50)

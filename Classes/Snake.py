@@ -1,10 +1,12 @@
 import pygame
-
+import random
+import time
 
 class Snake:
-    x = 200
-    y = 0
-
+    def __init__(self):
+        random.seed(time.perf_counter_ns())
+        self.x = random.randrange(0, 1000, 50)
+        self.y = random.randrange(0, 1000, 50)
     SNAKE_WIDTH = 50
     SNAKE_HEIGHT = 50
     SNAKE_HEAD_COLOR = (255, 255, 0)
