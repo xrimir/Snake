@@ -17,12 +17,14 @@ class Game:
         self.running = True
         self.game_status = False
         self.clock = pygame.time.Clock()
-        self.FPS = 10
+        self.FPS = 1
 
         pygame.display.set_caption("Snake")
 
     def score_point(self):
         self.score += 1
+    def score_reset(self):
+        self.score -= 1
 
     def draw_grid(self, window):
         grid_lines = 20
@@ -48,7 +50,7 @@ class Game:
     def start_game(self):
         pygame.mixer.music.unload()
         pygame.mixer.music.load("./static/ost.wav")
-        pygame.mixer.music.play(-1)
+        #pygame.mixer.music.play(-1)
         snake = Snake()
         fruit = Fruit()
         self.game_status = True
@@ -77,6 +79,7 @@ class Game:
             pygame.display.update()
             self.clock.tick(self.FPS)
         pygame.mixer.music.unload()
+        self.score_reset()
         del snake
         del fruit
 
