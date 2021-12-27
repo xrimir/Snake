@@ -1,7 +1,7 @@
 import pygame
 
 
-class Btn:
+class Button:
     def __init__(self, x, y, size_x, size_y, color, window):
         self.x = x
         self.y = y
@@ -10,6 +10,7 @@ class Btn:
         self.color = color
         self.window = window
         self.rect = pygame.Rect(x, y, size_x, size_y)
+        pygame.font.init()
 
     def check_for_collision(self, mx, my):
         if self.rect.collidepoint((mx, my)):

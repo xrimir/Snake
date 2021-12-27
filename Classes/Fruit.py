@@ -14,6 +14,7 @@ class Fruit:
         random.seed(time.perf_counter_ns())
         self.x = random.randrange(0, self.WIDTH - self.FRUIT_WIDTH, 50)
         self.y = random.randrange(0, self.HEIGHT - self.FRUIT_HEIGHT, 50)
+        pygame.font.init()
 
     def refresh_fruit(self):
         self.x = random.randrange(0, self.WIDTH - self.FRUIT_WIDTH, 50)

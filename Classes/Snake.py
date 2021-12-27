@@ -1,33 +1,39 @@
 import pygame
 import random
 import time
+import sys
+
 
 class Snake:
     def __init__(self):
         random.seed(time.perf_counter_ns())
         self.x = random.randrange(0, 1000, 50)
         self.y = random.randrange(0, 1000, 50)
+        self.snake_body = [{
+            "x": 0,
+            "y": 0,
+            "pos": (0, 0)
+        }]
+        self.direction = ""
+        pygame.font.init()
+
     SNAKE_WIDTH = 50
     SNAKE_HEIGHT = 50
     SNAKE_HEAD_COLOR = (255, 255, 0)
     SNAKE_TAIL_COLOR = (255, 0, 255)
     VELOCITY = 50
-    direction = ""
-    snake_body = [{
-        "x": 200,
-        "y": 0,
-        "pos": (200, 0)
-    }]
 
     def set_direction(self, ev):
+        if ev.type == pygame.QUIT:
+            sys.exit(0)
         if ev.type == pygame.KEYDOWN:
             if ev.key == pygame.K_w and self.direction != "down":
                 self.direction = "up"
-            if ev.key == pygame.K_s and self.direction != "up":
+            elif ev.key == pygame.K_s and self.direction != "up":
                 self.direction = "down"
-            if ev.key == pygame.K_a and self.direction != "right":
+            elif ev.key == pygame.K_a and self.direction != "right":
                 self.direction = "left"
-            if ev.key == pygame.K_d and self.direction != "left":
+            elif ev.key == pygame.K_d and self.direction != "left":
                 self.direction = "right"
 
     def move_snake(self):
