@@ -15,6 +15,7 @@ class Snake:
             "pos": (0, 0)
         }]
         self.direction = ""
+        self.direction_flag = True
         pygame.font.init()
 
     SNAKE_WIDTH = 50
@@ -24,16 +25,22 @@ class Snake:
     VELOCITY = 50
 
     def set_direction(self, ev):
-        if ev.type == pygame.QUIT:
-            sys.exit(0)
         if ev.type == pygame.KEYDOWN:
             if ev.key == pygame.K_w and self.direction != "down":
+                self.direction_flag = True
+                self.y -= self.VELOCITY
                 self.direction = "up"
             elif ev.key == pygame.K_s and self.direction != "up":
+                self.direction_flag = True
+                self.y += self.VELOCITY
                 self.direction = "down"
             elif ev.key == pygame.K_a and self.direction != "right":
+                self.direction_flag = True
+                self.x -= self.VELOCITY
                 self.direction = "left"
             elif ev.key == pygame.K_d and self.direction != "left":
+                self.direction_flag = True
+                self.x += self.VELOCITY
                 self.direction = "right"
 
     def move_snake(self):

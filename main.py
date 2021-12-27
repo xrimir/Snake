@@ -8,5 +8,5 @@ game_over_menu = GameOverMenu(game)
 
 while game.running:
     start_menu.display_menu()
-    game.game_loop()
+    game.start_game()
     game_over_menu.display_menu()

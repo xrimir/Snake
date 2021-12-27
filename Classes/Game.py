@@ -10,24 +10,25 @@ import sys
 class Game:
     def __init__(self):
         pygame.init()
-        self.WIDTH, self.HEIGHT = 1000, 1000
+        self.WIDTH, self.HEIGHT = 2000, 1000
         self.SIZE = (self.WIDTH, self.HEIGHT)
         self.screen = pygame.display.set_mode(self.SIZE)
         self.score = 0
         self.running = True
         self.game_status = False
         self.clock = pygame.time.Clock()
-        self.FPS = 1
+        self.FPS = 10
 
         pygame.display.set_caption("Snake")
 
     def score_point(self):
         self.score += 1
+
     def score_reset(self):
         self.score -= 1
 
     def draw_grid(self, window):
-        grid_lines = 20
+        grid_lines = 40
         grid_width = self.WIDTH // grid_lines
         x = 0
         y = 0
@@ -50,7 +51,7 @@ class Game:
     def start_game(self):
         pygame.mixer.music.unload()
         pygame.mixer.music.load("./static/ost.wav")
-        #pygame.mixer.music.play(-1)
+        # pygame.mixer.music.play(-1)
         snake = Snake()
         fruit = Fruit()
         self.game_status = True
@@ -61,11 +62,16 @@ class Game:
                 snake.set_direction(event)
             for node in snake.snake_body:
                 node["pos"] = (node["x"], node["y"])
-            snake.move_snake()
+            if not snake.direction_flag:
+                snake.move_snake()
+            snake.direction_flag = False
             self.game_over(snake)
-            for num in range(1, len(snake.snake_body)):
+
+            # Do metody game over / export
+            for num in range(2, len(snake.snake_body)):
                 if snake.x == snake.snake_body[num]["x"] and snake.y == snake.snake_body[num]["y"]:
                     self.game_status = False
+            # rendering to the screen gui
             self.screen.fill((0, 0, 0))
             self.draw_grid(self.screen)
             Text.render_text(f"Score: {self.score}", self.screen, 1, 1)
@@ -82,7 +88,3 @@ class Game:
         self.score_reset()
         del snake
         del fruit
-
-    def game_loop(self):
-        print("wywolanie gry")
-        self.start_game()
