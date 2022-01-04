@@ -3,7 +3,7 @@
  - Snake and Fruit Customization
  - ~~GameOver Menu after death~~
  - Different Difficulty Levels
- - Put static files in the right place
+ - ~~Put static files in the right place~~
 ## Music:
  - https://www.youtube.com/watch?v=pFS4zYWxzNA
 
